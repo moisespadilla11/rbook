@@ -2,3 +2,10 @@ fig:nice-fig
 tab:nice-tab
 prerequisites
 intro
+resumen
+análisis-exploratorio-de-los-datos
+tab:unnamed-chunk-1
+variables-cuantitativas
+matriz-de-correlación
+manejo-de-datos-atípicos
+variables-cualitativas
