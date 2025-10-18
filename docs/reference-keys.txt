@@ -9,3 +9,13 @@ variables-cuantitativas
 matriz-de-correlación
 manejo-de-datos-atípicos
 variables-cualitativas
+modelo-de-regresión-logística
+estadístico-de-wald
+prueba-de-razón-de-verosimilitud-likelihood-ratio-test
+pseudo-r²-como-mcfadden-cox-snell-nagelkerke
+test-de-hosmer-y-lemeshow
+prueba-de-factor-de-inflación-de-varianza---vif
+capacidad-predictiva-del-modelo-de-regresión-logística-ajustado
+conclusiones-y-recomendaciones
+conclusiones
+recomendaciones

@@ -1,0 +1,2420 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 3 Modelo de Regresión Logística | Estimación de la probabilidad de tener un empleo formal en Colombia para el año 2024: Una aplicación de regresión logística basada en la Gran Encuesta Integrada de Hogares</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 3 Modelo de Regresión Logística | Estimación de la probabilidad de tener un empleo formal en Colombia para el año 2024: Una aplicación de regresión logística basada en la Gran Encuesta Integrada de Hogares" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 3 Modelo de Regresión Logística | Estimación de la probabilidad de tener un empleo formal en Colombia para el año 2024: Una aplicación de regresión logística basada en la Gran Encuesta Integrada de Hogares" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Moisés Padilla - Ibana Romero" />
+
+
+<meta name="date" content="2025-10-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="análisis-exploratorio-de-los-datos.html"/>
+<link rel="next" href="capacidad-predictiva-del-modelo-de-regresión-logística-ajustado.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Resumen</a></li>
+<li class="chapter" data-level="2" data-path="análisis-exploratorio-de-los-datos.html"><a href="análisis-exploratorio-de-los-datos.html"><i class="fa fa-check"></i><b>2</b> Análisis exploratorio de los datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="análisis-exploratorio-de-los-datos.html"><a href="análisis-exploratorio-de-los-datos.html#variables-cuantitativas"><i class="fa fa-check"></i><b>2.1</b> Variables cuantitativas</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="análisis-exploratorio-de-los-datos.html"><a href="análisis-exploratorio-de-los-datos.html#matriz-de-correlación"><i class="fa fa-check"></i><b>2.1.1</b> Matriz de correlación</a></li>
+<li class="chapter" data-level="2.1.2" data-path="análisis-exploratorio-de-los-datos.html"><a href="análisis-exploratorio-de-los-datos.html#manejo-de-datos-atípicos"><i class="fa fa-check"></i><b>2.1.2</b> Manejo de datos atípicos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="análisis-exploratorio-de-los-datos.html"><a href="análisis-exploratorio-de-los-datos.html#variables-cualitativas"><i class="fa fa-check"></i><b>2.2</b> Variables cualitativas</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelo-de-regresión-logística.html"><a href="modelo-de-regresión-logística.html"><i class="fa fa-check"></i><b>3</b> Modelo de Regresión Logística</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modelo-de-regresión-logística.html"><a href="modelo-de-regresión-logística.html#estadístico-de-wald"><i class="fa fa-check"></i><b>3.1</b> Estadístico de Wald</a></li>
+<li class="chapter" data-level="3.2" data-path="modelo-de-regresión-logística.html"><a href="modelo-de-regresión-logística.html#prueba-de-razón-de-verosimilitud-likelihood-ratio-test"><i class="fa fa-check"></i><b>3.2</b> Prueba de razón de verosimilitud (Likelihood Ratio Test)</a></li>
+<li class="chapter" data-level="3.3" data-path="modelo-de-regresión-logística.html"><a href="modelo-de-regresión-logística.html#pseudo-r²-como-mcfadden-cox-snell-nagelkerke"><i class="fa fa-check"></i><b>3.3</b> Pseudo R² (como McFadden, Cox Snell, Nagelkerke)</a></li>
+<li class="chapter" data-level="3.4" data-path="modelo-de-regresión-logística.html"><a href="modelo-de-regresión-logística.html#test-de-hosmer-y-lemeshow"><i class="fa fa-check"></i><b>3.4</b> Test de Hosmer y Lemeshow}</a></li>
+<li class="chapter" data-level="3.5" data-path="modelo-de-regresión-logística.html"><a href="modelo-de-regresión-logística.html#prueba-de-factor-de-inflación-de-varianza---vif"><i class="fa fa-check"></i><b>3.5</b> Prueba de Factor de inflación de Varianza - VIF</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="capacidad-predictiva-del-modelo-de-regresión-logística-ajustado.html"><a href="capacidad-predictiva-del-modelo-de-regresión-logística-ajustado.html"><i class="fa fa-check"></i><b>4</b> Capacidad predictiva del modelo de regresión logística ajustado</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estimación de la probabilidad de tener un empleo formal en Colombia para el año 2024: Una aplicación de regresión logística basada en la Gran Encuesta Integrada de Hogares</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modelo-de-regresión-logística" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Capítulo 3</span> Modelo de Regresión Logística<a href="modelo-de-regresión-logística.html#modelo-de-regresión-logística" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Como se ha señalado anteriormente, la variable respuesta de este modelo será la variable formalidad con niveles 1 para formal y 0 para informal</p>
+<p>Es importante aclarar que los resultados que se muestran a continuación se estimaron después de la eliminación de algunas variables que causaban multicolinealidad en el modelo (Ver Prueba de VIF)</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="modelo-de-regresión-logística.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-2"><a href="modelo-de-regresión-logística.html#cb1-2" tabindex="-1"></a>datos_winsor <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;C:/Users/moisesdp/Documents/Trabajo de profundizacion/datos_winsor.csv&quot;</span>)</span>
+<span id="cb1-3"><a href="modelo-de-regresión-logística.html#cb1-3" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">glm</span>(formalidad <span class="sc">~</span> CLASE <span class="sc">+</span> Sexo <span class="sc">+</span> Edad <span class="sc">+</span></span>
+<span id="cb1-4"><a href="modelo-de-regresión-logística.html#cb1-4" tabindex="-1"></a>  <span class="st">`</span><span class="at">Parentesco con jefe de hogar</span><span class="st">`</span> <span class="sc">+</span> <span class="st">`</span><span class="at">¿Usted se reconoce como?</span><span class="st">`</span> <span class="sc">+</span></span>
+<span id="cb1-5"><a href="modelo-de-regresión-logística.html#cb1-5" tabindex="-1"></a>  <span class="st">`</span><span class="at">Estado civil</span><span class="st">`</span> <span class="sc">+</span> <span class="st">`</span><span class="at">¿Afiliado, cotizante o beneficiario de seguridad social en salud?</span><span class="st">`</span> <span class="sc">+</span> <span class="st">`</span><span class="at">Mayor nivel educativo alcanzado</span><span class="st">`</span> <span class="sc">+</span></span>
+<span id="cb1-6"><a href="modelo-de-regresión-logística.html#cb1-6" tabindex="-1"></a>  <span class="st">`</span><span class="at">Para la ocupación que desempeña, ¿tiene algún tipo de contrato</span><span class="st">`</span> <span class="sc">+</span></span>
+<span id="cb1-7"><a href="modelo-de-regresión-logística.html#cb1-7" tabindex="-1"></a>  <span class="st">`</span><span class="at">¿Cuánto tiempo lleva en esta empresa trabajando de forma continua (meses)?</span><span class="st">`</span> <span class="sc">+</span></span>
+<span id="cb1-8"><a href="modelo-de-regresión-logística.html#cb1-8" tabindex="-1"></a>  <span class="st">`</span><span class="at">Tipo de ocupación</span><span class="st">`</span> <span class="sc">+</span></span>
+<span id="cb1-9"><a href="modelo-de-regresión-logística.html#cb1-9" tabindex="-1"></a>  <span class="st">`</span><span class="at">El mes pasado, ¿recibió pagos por concepto de arriendos o pensiones?</span><span class="st">`</span> <span class="sc">+</span></span>
+<span id="cb1-10"><a href="modelo-de-regresión-logística.html#cb1-10" tabindex="-1"></a>  <span class="st">`</span><span class="at">¿Es propietario de una o varias propiedades inmuebles?</span><span class="st">`</span> <span class="sc">+</span></span>
+<span id="cb1-11"><a href="modelo-de-regresión-logística.html#cb1-11" tabindex="-1"></a>  <span class="st">`</span><span class="at">Tipo de vivienda</span><span class="st">`</span> <span class="sc">+</span> <span class="st">`</span><span class="at">¿Tiene servicio de energía eléctrica?</span><span class="st">`</span> <span class="sc">+</span></span>
+<span id="cb1-12"><a href="modelo-de-regresión-logística.html#cb1-12" tabindex="-1"></a>  <span class="st">`</span><span class="at">Estrato para tarifa</span><span class="st">`</span> <span class="sc">+</span> <span class="st">`</span><span class="at">Número de hogares en la vivienda</span><span class="st">`</span> <span class="sc">+</span></span>
+<span id="cb1-13"><a href="modelo-de-regresión-logística.html#cb1-13" tabindex="-1"></a>  <span class="st">`</span><span class="at">Número de cuartos</span><span class="st">`</span> <span class="sc">+</span> <span class="st">`</span><span class="at">La vivienda ocupada por este hogar es</span><span class="st">`</span> <span class="sc">+</span></span>
+<span id="cb1-14"><a href="modelo-de-regresión-logística.html#cb1-14" tabindex="-1"></a>  <span class="st">`</span><span class="at">Total de personas en el hogar</span><span class="st">`</span> <span class="sc">+</span> AREA <span class="sc">+</span></span>
+<span id="cb1-15"><a href="modelo-de-regresión-logística.html#cb1-15" tabindex="-1"></a>  <span class="st">`</span><span class="at">Meses que estuvo sin empleo entre su trabajo actual y el anterior</span><span class="st">`</span> <span class="sc">+</span></span>
+<span id="cb1-16"><a href="modelo-de-regresión-logística.html#cb1-16" tabindex="-1"></a>  <span class="st">`</span><span class="at">Tiempo de desplazamiento hasta su sitio de trabajo</span><span class="st">`</span>,</span>
+<span id="cb1-17"><a href="modelo-de-regresión-logística.html#cb1-17" tabindex="-1"></a>  <span class="at">data =</span> datos_winsor, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="modelo-de-regresión-logística.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(jtools)</span>
+<span id="cb2-2"><a href="modelo-de-regresión-logística.html#cb2-2" tabindex="-1"></a><span class="fu">summ</span>(modelo, <span class="at">exp =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Observations
+</td>
+<td style="text-align:right;">
+353672
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Dependent variable
+</td>
+<td style="text-align:right;">
+formalidad
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Type
+</td>
+<td style="text-align:right;">
+Generalized linear model
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Family
+</td>
+<td style="text-align:right;">
+binomial
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Link
+</td>
+<td style="text-align:right;">
+logit
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-striped table-hover table-condensed table-responsive" style="color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+χ²(92)
+</td>
+<td style="text-align:right;">
+253281.083
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+p
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Pseudo-R² (Cragg-Uhler)
+</td>
+<td style="text-align:right;">
+0.685
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Pseudo-R² (McFadden)
+</td>
+<td style="text-align:right;">
+0.522
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AIC
+</td>
+<td style="text-align:right;">
+232152.551
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+BIC
+</td>
+<td style="text-align:right;">
+233154.731
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-striped table-hover table-condensed table-responsive" style="color: black; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+exp(Est.)
+</th>
+<th style="text-align:right;">
+2.5%
+</th>
+<th style="text-align:right;">
+97.5%
+</th>
+<th style="text-align:right;">
+z val.
+</th>
+<th style="text-align:right;">
+p
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+-24.787
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+CLASEUrbano
+</td>
+<td style="text-align:right;">
+1.186
+</td>
+<td style="text-align:right;">
+1.140
+</td>
+<td style="text-align:right;">
+1.234
+</td>
+<td style="text-align:right;">
+8.470
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+SexoMujer
+</td>
+<td style="text-align:right;">
+0.738
+</td>
+<td style="text-align:right;">
+0.721
+</td>
+<td style="text-align:right;">
+0.755
+</td>
+<td style="text-align:right;">
+-25.711
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Edad
+</td>
+<td style="text-align:right;">
+1.008
+</td>
+<td style="text-align:right;">
+1.007
+</td>
+<td style="text-align:right;">
+1.009
+</td>
+<td style="text-align:right;">
+13.622
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Parentesco con jefe de hogar</code>Hijo(a), hijastro(a)
+</td>
+<td style="text-align:right;">
+1.125
+</td>
+<td style="text-align:right;">
+1.044
+</td>
+<td style="text-align:right;">
+1.213
+</td>
+<td style="text-align:right;">
+3.091
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Parentesco con jefe de hogar</code>Jefe(a) del hogar
+</td>
+<td style="text-align:right;">
+1.397
+</td>
+<td style="text-align:right;">
+1.295
+</td>
+<td style="text-align:right;">
+1.506
+</td>
+<td style="text-align:right;">
+8.709
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Parentesco con jefe de hogar</code>Nieto(a)
+</td>
+<td style="text-align:right;">
+0.879
+</td>
+<td style="text-align:right;">
+0.736
+</td>
+<td style="text-align:right;">
+1.050
+</td>
+<td style="text-align:right;">
+-1.421
+</td>
+<td style="text-align:right;">
+0.155
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Parentesco con jefe de hogar</code>Otro no pariente
+</td>
+<td style="text-align:right;">
+1.059
+</td>
+<td style="text-align:right;">
+0.967
+</td>
+<td style="text-align:right;">
+1.159
+</td>
+<td style="text-align:right;">
+1.238
+</td>
+<td style="text-align:right;">
+0.216
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Parentesco con jefe de hogar</code>Otro pariente
+</td>
+<td style="text-align:right;">
+1.029
+</td>
+<td style="text-align:right;">
+0.753
+</td>
+<td style="text-align:right;">
+1.405
+</td>
+<td style="text-align:right;">
+0.177
+</td>
+<td style="text-align:right;">
+0.859
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Parentesco con jefe de hogar</code>Pareja, esposo(a), cónyuge, compañero(a)
+</td>
+<td style="text-align:right;">
+1.204
+</td>
+<td style="text-align:right;">
+1.111
+</td>
+<td style="text-align:right;">
+1.305
+</td>
+<td style="text-align:right;">
+4.540
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Parentesco con jefe de hogar</code>Pensionista
+</td>
+<td style="text-align:right;">
+1.161
+</td>
+<td style="text-align:right;">
+1.041
+</td>
+<td style="text-align:right;">
+1.295
+</td>
+<td style="text-align:right;">
+2.686
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Parentesco con jefe de hogar</code>Trabajador
+</td>
+<td style="text-align:right;">
+0.731
+</td>
+<td style="text-align:right;">
+0.655
+</td>
+<td style="text-align:right;">
+0.816
+</td>
+<td style="text-align:right;">
+-5.619
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>¿Usted se reconoce como?</code>Indígena
+</td>
+<td style="text-align:right;">
+1.299
+</td>
+<td style="text-align:right;">
+0.617
+</td>
+<td style="text-align:right;">
+2.736
+</td>
+<td style="text-align:right;">
+0.689
+</td>
+<td style="text-align:right;">
+0.491
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>¿Usted se reconoce como?</code>Negro (a), mulato (a) (afrodescendiente), afrocolombiano(a)
+</td>
+<td style="text-align:right;">
+1.287
+</td>
+<td style="text-align:right;">
+0.612
+</td>
+<td style="text-align:right;">
+2.705
+</td>
+<td style="text-align:right;">
+0.665
+</td>
+<td style="text-align:right;">
+0.506
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>¿Usted se reconoce como?</code>Ninguno de los anteriores
+</td>
+<td style="text-align:right;">
+1.488
+</td>
+<td style="text-align:right;">
+0.709
+</td>
+<td style="text-align:right;">
+3.126
+</td>
+<td style="text-align:right;">
+1.051
+</td>
+<td style="text-align:right;">
+0.293
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>¿Usted se reconoce como?</code>Palenquero (a) de San Basilio
+</td>
+<td style="text-align:right;">
+1.534
+</td>
+<td style="text-align:right;">
+0.607
+</td>
+<td style="text-align:right;">
+3.876
+</td>
+<td style="text-align:right;">
+0.905
+</td>
+<td style="text-align:right;">
+0.365
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>¿Usted se reconoce como?</code>Raizal del archipiélago de San Andrés, Providencia y Santa Catalina
+</td>
+<td style="text-align:right;">
+6.143
+</td>
+<td style="text-align:right;">
+2.818
+</td>
+<td style="text-align:right;">
+13.389
+</td>
+<td style="text-align:right;">
+4.566
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estado civil</code>Esta separado (a) o divorciado (a)
+</td>
+<td style="text-align:right;">
+0.653
+</td>
+<td style="text-align:right;">
+0.627
+</td>
+<td style="text-align:right;">
+0.680
+</td>
+<td style="text-align:right;">
+-20.563
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estado civil</code>Esta soltero (a)
+</td>
+<td style="text-align:right;">
+0.654
+</td>
+<td style="text-align:right;">
+0.628
+</td>
+<td style="text-align:right;">
+0.682
+</td>
+<td style="text-align:right;">
+-20.108
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estado civil</code>Esta viudo (a)
+</td>
+<td style="text-align:right;">
+0.452
+</td>
+<td style="text-align:right;">
+0.415
+</td>
+<td style="text-align:right;">
+0.493
+</td>
+<td style="text-align:right;">
+-17.896
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estado civil</code>No esta casado (a) y vive en pareja hace dos años o más
+</td>
+<td style="text-align:right;">
+0.926
+</td>
+<td style="text-align:right;">
+0.897
+</td>
+<td style="text-align:right;">
+0.956
+</td>
+<td style="text-align:right;">
+-4.694
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estado civil</code>No esta casado(a) y vive en pareja hace menos de dos años
+</td>
+<td style="text-align:right;">
+0.781
+</td>
+<td style="text-align:right;">
+0.730
+</td>
+<td style="text-align:right;">
+0.836
+</td>
+<td style="text-align:right;">
+-7.115
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>¿Afiliado, cotizante o beneficiario de seguridad social en salud?</code>No sabe, no informa
+</td>
+<td style="text-align:right;">
+13.369
+</td>
+<td style="text-align:right;">
+3.484
+</td>
+<td style="text-align:right;">
+51.302
+</td>
+<td style="text-align:right;">
+3.779
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>¿Afiliado, cotizante o beneficiario de seguridad social en salud?</code>Sí
+</td>
+<td style="text-align:right;">
+1228.533
+</td>
+<td style="text-align:right;">
+708.307
+</td>
+<td style="text-align:right;">
+2130.845
+</td>
+<td style="text-align:right;">
+25.318
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Básica secundaria
+</td>
+<td style="text-align:right;">
+1.208
+</td>
+<td style="text-align:right;">
+1.156
+</td>
+<td style="text-align:right;">
+1.263
+</td>
+<td style="text-align:right;">
+8.346
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Doctorado
+</td>
+<td style="text-align:right;">
+25.646
+</td>
+<td style="text-align:right;">
+15.515
+</td>
+<td style="text-align:right;">
+42.393
+</td>
+<td style="text-align:right;">
+12.653
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Especialización
+</td>
+<td style="text-align:right;">
+42.093
+</td>
+<td style="text-align:right;">
+38.371
+</td>
+<td style="text-align:right;">
+46.176
+</td>
+<td style="text-align:right;">
+79.173
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Maestría
+</td>
+<td style="text-align:right;">
+44.546
+</td>
+<td style="text-align:right;">
+37.961
+</td>
+<td style="text-align:right;">
+52.273
+</td>
+<td style="text-align:right;">
+46.518
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Media académica
+</td>
+<td style="text-align:right;">
+2.919
+</td>
+<td style="text-align:right;">
+2.818
+</td>
+<td style="text-align:right;">
+3.025
+</td>
+<td style="text-align:right;">
+59.346
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Media técnica
+</td>
+<td style="text-align:right;">
+4.127
+</td>
+<td style="text-align:right;">
+3.862
+</td>
+<td style="text-align:right;">
+4.410
+</td>
+<td style="text-align:right;">
+41.926
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Ninguno
+</td>
+<td style="text-align:right;">
+0.499
+</td>
+<td style="text-align:right;">
+0.447
+</td>
+<td style="text-align:right;">
+0.556
+</td>
+<td style="text-align:right;">
+-12.496
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>No sabe, no informa
+</td>
+<td style="text-align:right;">
+1.748
+</td>
+<td style="text-align:right;">
+0.129
+</td>
+<td style="text-align:right;">
+23.652
+</td>
+<td style="text-align:right;">
+0.420
+</td>
+<td style="text-align:right;">
+0.674
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Normalista
+</td>
+<td style="text-align:right;">
+5.080
+</td>
+<td style="text-align:right;">
+3.891
+</td>
+<td style="text-align:right;">
+6.632
+</td>
+<td style="text-align:right;">
+11.950
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Preescolar
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+113686124823796995064668.000
+</td>
+<td style="text-align:right;">
+-0.297
+</td>
+<td style="text-align:right;">
+0.766
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Técnica profesional
+</td>
+<td style="text-align:right;">
+7.500
+</td>
+<td style="text-align:right;">
+7.165
+</td>
+<td style="text-align:right;">
+7.852
+</td>
+<td style="text-align:right;">
+86.212
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Tecnológica
+</td>
+<td style="text-align:right;">
+8.810
+</td>
+<td style="text-align:right;">
+8.303
+</td>
+<td style="text-align:right;">
+9.349
+</td>
+<td style="text-align:right;">
+71.882
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Mayor nivel educativo alcanzado</code>Universitaria
+</td>
+<td style="text-align:right;">
+11.372
+</td>
+<td style="text-align:right;">
+10.877
+</td>
+<td style="text-align:right;">
+11.889
+</td>
+<td style="text-align:right;">
+107.161
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Para la ocupación que desempeña, ¿tiene algún tipo de contrato</code>Sí
+</td>
+<td style="text-align:right;">
+15.211
+</td>
+<td style="text-align:right;">
+14.597
+</td>
+<td style="text-align:right;">
+15.850
+</td>
+<td style="text-align:right;">
+129.542
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>¿Cuánto tiempo lleva en esta empresa trabajando de forma continua (meses)?</code>
+</td>
+<td style="text-align:right;">
+1.002
+</td>
+<td style="text-align:right;">
+1.001
+</td>
+<td style="text-align:right;">
+1.002
+</td>
+<td style="text-align:right;">
+22.152
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de ocupación</code>Jornalero o peón
+</td>
+<td style="text-align:right;">
+0.023
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+<td style="text-align:right;">
+0.174
+</td>
+<td style="text-align:right;">
+-3.659
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de ocupación</code>Obrero o empleado de empresa particular
+</td>
+<td style="text-align:right;">
+8.249
+</td>
+<td style="text-align:right;">
+7.769
+</td>
+<td style="text-align:right;">
+8.758
+</td>
+<td style="text-align:right;">
+68.978
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de ocupación</code>Obrero o empleado del gobierno
+</td>
+<td style="text-align:right;">
+3174.884
+</td>
+<td style="text-align:right;">
+1509.358
+</td>
+<td style="text-align:right;">
+6678.262
+</td>
+<td style="text-align:right;">
+21.253
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de ocupación</code>Patrón o empleador
+</td>
+<td style="text-align:right;">
+9.361
+</td>
+<td style="text-align:right;">
+8.551
+</td>
+<td style="text-align:right;">
+10.248
+</td>
+<td style="text-align:right;">
+48.437
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de ocupación</code>Trabajador familiar sin remuneración
+</td>
+<td style="text-align:right;">
+2.084
+</td>
+<td style="text-align:right;">
+1.792
+</td>
+<td style="text-align:right;">
+2.423
+</td>
+<td style="text-align:right;">
+9.547
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de ocupación</code>Trabajador por cuenta propia
+</td>
+<td style="text-align:right;">
+3.083
+</td>
+<td style="text-align:right;">
+2.884
+</td>
+<td style="text-align:right;">
+3.295
+</td>
+<td style="text-align:right;">
+33.053
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de ocupación</code>Trabajador sin remuneración en empresas o negocios de otros hogares
+</td>
+<td style="text-align:right;">
+1.613
+</td>
+<td style="text-align:right;">
+1.473
+</td>
+<td style="text-align:right;">
+1.766
+</td>
+<td style="text-align:right;">
+10.311
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>El mes pasado, ¿recibió pagos por concepto de arriendos o pensiones?</code>Sí
+</td>
+<td style="text-align:right;">
+4.379
+</td>
+<td style="text-align:right;">
+4.147
+</td>
+<td style="text-align:right;">
+4.624
+</td>
+<td style="text-align:right;">
+53.221
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>¿Es propietario de una o varias propiedades inmuebles?</code>Sí
+</td>
+<td style="text-align:right;">
+1.242
+</td>
+<td style="text-align:right;">
+1.195
+</td>
+<td style="text-align:right;">
+1.292
+</td>
+<td style="text-align:right;">
+10.901
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de vivienda</code>Casa
+</td>
+<td style="text-align:right;">
+0.931
+</td>
+<td style="text-align:right;">
+0.909
+</td>
+<td style="text-align:right;">
+0.953
+</td>
+<td style="text-align:right;">
+-5.879
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de vivienda</code>Cuarto (s) en inquilinato
+</td>
+<td style="text-align:right;">
+0.683
+</td>
+<td style="text-align:right;">
+0.618
+</td>
+<td style="text-align:right;">
+0.756
+</td>
+<td style="text-align:right;">
+-7.359
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de vivienda</code>Cuarto (s) en otro tipo de estructura
+</td>
+<td style="text-align:right;">
+0.858
+</td>
+<td style="text-align:right;">
+0.690
+</td>
+<td style="text-align:right;">
+1.068
+</td>
+<td style="text-align:right;">
+-1.372
+</td>
+<td style="text-align:right;">
+0.170
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de vivienda</code>Otra vivienda (carpa, vagón, embarcación, cueva, refugio natural, etc.)
+</td>
+<td style="text-align:right;">
+1.616
+</td>
+<td style="text-align:right;">
+0.677
+</td>
+<td style="text-align:right;">
+3.858
+</td>
+<td style="text-align:right;">
+1.081
+</td>
+<td style="text-align:right;">
+0.280
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tipo de vivienda</code>Vivienda indígena
+</td>
+<td style="text-align:right;">
+1.817
+</td>
+<td style="text-align:right;">
+1.349
+</td>
+<td style="text-align:right;">
+2.448
+</td>
+<td style="text-align:right;">
+3.931
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>¿Tiene servicio de energía eléctrica?</code>Sí
+</td>
+<td style="text-align:right;">
+1.315
+</td>
+<td style="text-align:right;">
+1.043
+</td>
+<td style="text-align:right;">
+1.658
+</td>
+<td style="text-align:right;">
+2.319
+</td>
+<td style="text-align:right;">
+0.020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estrato para tarifa</code>Bajo
+</td>
+<td style="text-align:right;">
+0.349
+</td>
+<td style="text-align:right;">
+0.311
+</td>
+<td style="text-align:right;">
+0.391
+</td>
+<td style="text-align:right;">
+-17.984
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estrato para tarifa</code>Bajo - bajo
+</td>
+<td style="text-align:right;">
+0.239
+</td>
+<td style="text-align:right;">
+0.213
+</td>
+<td style="text-align:right;">
+0.269
+</td>
+<td style="text-align:right;">
+-24.202
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estrato para tarifa</code>Conexión pirata
+</td>
+<td style="text-align:right;">
+0.193
+</td>
+<td style="text-align:right;">
+0.165
+</td>
+<td style="text-align:right;">
+0.226
+</td>
+<td style="text-align:right;">
+-20.667
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estrato para tarifa</code>Medio
+</td>
+<td style="text-align:right;">
+0.588
+</td>
+<td style="text-align:right;">
+0.521
+</td>
+<td style="text-align:right;">
+0.663
+</td>
+<td style="text-align:right;">
+-8.639
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estrato para tarifa</code>Medio - alto
+</td>
+<td style="text-align:right;">
+0.820
+</td>
+<td style="text-align:right;">
+0.715
+</td>
+<td style="text-align:right;">
+0.940
+</td>
+<td style="text-align:right;">
+-2.842
+</td>
+<td style="text-align:right;">
+0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estrato para tarifa</code>Medio - bajo
+</td>
+<td style="text-align:right;">
+0.447
+</td>
+<td style="text-align:right;">
+0.399
+</td>
+<td style="text-align:right;">
+0.501
+</td>
+<td style="text-align:right;">
+-13.751
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Estrato para tarifa</code>No sabe o cuenta con planta eléctrica
+</td>
+<td style="text-align:right;">
+0.166
+</td>
+<td style="text-align:right;">
+0.135
+</td>
+<td style="text-align:right;">
+0.205
+</td>
+<td style="text-align:right;">
+-17.005
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Número de hogares en la vivienda</code>
+</td>
+<td style="text-align:right;">
+0.769
+</td>
+<td style="text-align:right;">
+0.704
+</td>
+<td style="text-align:right;">
+0.841
+</td>
+<td style="text-align:right;">
+-5.783
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Número de cuartos</code>
+</td>
+<td style="text-align:right;">
+1.161
+</td>
+<td style="text-align:right;">
+1.146
+</td>
+<td style="text-align:right;">
+1.176
+</td>
+<td style="text-align:right;">
+22.717
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>La vivienda ocupada por este hogar es</code>En usufructo
+</td>
+<td style="text-align:right;">
+0.958
+</td>
+<td style="text-align:right;">
+0.929
+</td>
+<td style="text-align:right;">
+0.989
+</td>
+<td style="text-align:right;">
+-2.682
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>La vivienda ocupada por este hogar es</code>Otra
+</td>
+<td style="text-align:right;">
+1.070
+</td>
+<td style="text-align:right;">
+0.989
+</td>
+<td style="text-align:right;">
+1.158
+</td>
+<td style="text-align:right;">
+1.690
+</td>
+<td style="text-align:right;">
+0.091
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>La vivienda ocupada por este hogar es</code>Posesión sin titulo (ocupante de hecho) ó propiedad colectiva
+</td>
+<td style="text-align:right;">
+0.979
+</td>
+<td style="text-align:right;">
+0.917
+</td>
+<td style="text-align:right;">
+1.044
+</td>
+<td style="text-align:right;">
+-0.650
+</td>
+<td style="text-align:right;">
+0.516
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>La vivienda ocupada por este hogar es</code>Propia, la están pagando
+</td>
+<td style="text-align:right;">
+1.633
+</td>
+<td style="text-align:right;">
+1.538
+</td>
+<td style="text-align:right;">
+1.734
+</td>
+<td style="text-align:right;">
+15.961
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>La vivienda ocupada por este hogar es</code>Propia, totalmente pagada
+</td>
+<td style="text-align:right;">
+1.238
+</td>
+<td style="text-align:right;">
+1.201
+</td>
+<td style="text-align:right;">
+1.276
+</td>
+<td style="text-align:right;">
+13.852
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Total de personas en el hogar</code>
+</td>
+<td style="text-align:right;">
+0.940
+</td>
+<td style="text-align:right;">
+0.932
+</td>
+<td style="text-align:right;">
+0.947
+</td>
+<td style="text-align:right;">
+-15.160
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREABarranquilla AM
+</td>
+<td style="text-align:right;">
+0.579
+</td>
+<td style="text-align:right;">
+0.540
+</td>
+<td style="text-align:right;">
+0.620
+</td>
+<td style="text-align:right;">
+-15.594
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREABogotá DC
+</td>
+<td style="text-align:right;">
+0.876
+</td>
+<td style="text-align:right;">
+0.818
+</td>
+<td style="text-align:right;">
+0.938
+</td>
+<td style="text-align:right;">
+-3.793
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREABucaramanga AM
+</td>
+<td style="text-align:right;">
+0.789
+</td>
+<td style="text-align:right;">
+0.737
+</td>
+<td style="text-align:right;">
+0.844
+</td>
+<td style="text-align:right;">
+-6.846
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREACali AM
+</td>
+<td style="text-align:right;">
+0.804
+</td>
+<td style="text-align:right;">
+0.753
+</td>
+<td style="text-align:right;">
+0.860
+</td>
+<td style="text-align:right;">
+-6.423
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREACartagena
+</td>
+<td style="text-align:right;">
+0.744
+</td>
+<td style="text-align:right;">
+0.694
+</td>
+<td style="text-align:right;">
+0.798
+</td>
+<td style="text-align:right;">
+-8.329
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREACúcuta AM
+</td>
+<td style="text-align:right;">
+0.711
+</td>
+<td style="text-align:right;">
+0.662
+</td>
+<td style="text-align:right;">
+0.764
+</td>
+<td style="text-align:right;">
+-9.275
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREAFlorencia
+</td>
+<td style="text-align:right;">
+0.691
+</td>
+<td style="text-align:right;">
+0.641
+</td>
+<td style="text-align:right;">
+0.745
+</td>
+<td style="text-align:right;">
+-9.656
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREAIbagué
+</td>
+<td style="text-align:right;">
+0.675
+</td>
+<td style="text-align:right;">
+0.626
+</td>
+<td style="text-align:right;">
+0.727
+</td>
+<td style="text-align:right;">
+-10.238
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREAManizales AM
+</td>
+<td style="text-align:right;">
+1.081
+</td>
+<td style="text-align:right;">
+1.011
+</td>
+<td style="text-align:right;">
+1.155
+</td>
+<td style="text-align:right;">
+2.292
+</td>
+<td style="text-align:right;">
+0.022
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREAMedellín AM
+</td>
+<td style="text-align:right;">
+1.184
+</td>
+<td style="text-align:right;">
+1.109
+</td>
+<td style="text-align:right;">
+1.265
+</td>
+<td style="text-align:right;">
+5.055
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREAMontería
+</td>
+<td style="text-align:right;">
+0.676
+</td>
+<td style="text-align:right;">
+0.628
+</td>
+<td style="text-align:right;">
+0.728
+</td>
+<td style="text-align:right;">
+-10.384
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREANeiva
+</td>
+<td style="text-align:right;">
+0.871
+</td>
+<td style="text-align:right;">
+0.809
+</td>
+<td style="text-align:right;">
+0.937
+</td>
+<td style="text-align:right;">
+-3.698
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREAPasto
+</td>
+<td style="text-align:right;">
+0.566
+</td>
+<td style="text-align:right;">
+0.528
+</td>
+<td style="text-align:right;">
+0.607
+</td>
+<td style="text-align:right;">
+-16.053
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREAPereira AM
+</td>
+<td style="text-align:right;">
+1.061
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+1.134
+</td>
+<td style="text-align:right;">
+1.760
+</td>
+<td style="text-align:right;">
+0.078
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREAPopayán
+</td>
+<td style="text-align:right;">
+0.460
+</td>
+<td style="text-align:right;">
+0.428
+</td>
+<td style="text-align:right;">
+0.495
+</td>
+<td style="text-align:right;">
+-21.080
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREAQuibdó
+</td>
+<td style="text-align:right;">
+0.681
+</td>
+<td style="text-align:right;">
+0.628
+</td>
+<td style="text-align:right;">
+0.739
+</td>
+<td style="text-align:right;">
+-9.273
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREARiohacha
+</td>
+<td style="text-align:right;">
+0.570
+</td>
+<td style="text-align:right;">
+0.526
+</td>
+<td style="text-align:right;">
+0.617
+</td>
+<td style="text-align:right;">
+-13.812
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREASanta Marta
+</td>
+<td style="text-align:right;">
+0.662
+</td>
+<td style="text-align:right;">
+0.616
+</td>
+<td style="text-align:right;">
+0.713
+</td>
+<td style="text-align:right;">
+-11.019
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREASincelejo
+</td>
+<td style="text-align:right;">
+0.483
+</td>
+<td style="text-align:right;">
+0.447
+</td>
+<td style="text-align:right;">
+0.521
+</td>
+<td style="text-align:right;">
+-18.829
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREATunja
+</td>
+<td style="text-align:right;">
+0.595
+</td>
+<td style="text-align:right;">
+0.553
+</td>
+<td style="text-align:right;">
+0.640
+</td>
+<td style="text-align:right;">
+-13.969
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREAValledupar
+</td>
+<td style="text-align:right;">
+0.508
+</td>
+<td style="text-align:right;">
+0.471
+</td>
+<td style="text-align:right;">
+0.548
+</td>
+<td style="text-align:right;">
+-17.603
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AREAVillavicencio
+</td>
+<td style="text-align:right;">
+0.671
+</td>
+<td style="text-align:right;">
+0.627
+</td>
+<td style="text-align:right;">
+0.719
+</td>
+<td style="text-align:right;">
+-11.294
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Meses que estuvo sin empleo entre su trabajo actual y el anterior</code>
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+-9.307
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+<code>Tiempo de desplazamiento hasta su sitio de trabajo</code>
+</td>
+<td style="text-align:right;">
+1.015
+</td>
+<td style="text-align:right;">
+1.014
+</td>
+<td style="text-align:right;">
+1.016
+</td>
+<td style="text-align:right;">
+50.689
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> Standard errors: MLE
+</td>
+</tr>
+</tfoot>
+</table>
+<p>De este resumen se puede concluir que el modelo estimado es estadisticamente
+significativo, dado que el p-valor del chi cuadrado es menor que el nivel de significancia
+5%. Este modelo es mejor prediciendo las probabilidades de un empleo formal que uno sin
+variables. Se observa que la variable sexo, clase y edad tienen
+un efecto significativo sobre la probabilidad de tener empleo formal. Según los resultados es
+1,186 veces más probable conseguir empleo formal si vives en la zona urbana en comparación
+con trabajadores de zonas rurales. Ser mujer hace menos probable estar en la formalidad, y
+por cada año de edad se incrementa esta probabilidad en un 0.8%. En cuanto a parentesco
+con jefe del hogar, ser el nieto, esposo(a) u otro pariente no son significativas dentro del
+modelo. Al hablar de pertenencia a una comunidad, sólo si la persona se identifica como raizal
+tiene influencia en la probabilidad de empleo formal.</p>
+<p>El estado civil es una variable significativa dentro del modelo; sin embargo, pertenecer a
+cualquiera de las categorías que no sea estar casado disminuye las probabilidades de tener
+un empleo formal. Estar afiliado a seguridad social hace más probable tener un empleo
+formal que aquellos que no tienen afiliación. Como era de esperarse, tener educación superior incrementa las probabilidades de estar empleado formalmente que aquellos que no la tienen. La
+significancia estadística de tener contrato laboral indica que si el individuo tiene uno, es más
+probable que tenga empleo formal que aquellos que no. Por otro lado, si lleva muchos
+meses continuos en el mismo empleo, es más probable que esté formalizado.</p>
+<p>Según los resultados si la ocupación que desempeña el individuo es como
+obrero o empleado del gobierno, las probabilidades de que esté formalizado son mayores que las
+de aquellos que desempeñan otra actividad. Si ha recibido ingresos por arriendo o pensiones, es
+más probable tener un empleo formal que aquellos que no. Ser propietario de inmuebles
+incrementa la razón de probabilidad de tener un empleo formal en un 24.2%. Vivir en
+apartamento hace más probable tener un empleo formal que vivir en otro tipo de vivienda,
+y tener energía eléctrica, además de pertenecer a un estrato alto, incrementa el log-odds de
+tener empleo formal.</p>
+<p>Por hogar adicional en una misma vivienda se reduce la probabilidad de que la persona
+tenga empleo formal en un 23.1%. Por cada cuarto adicional en la vivienda incrementa la
+posibilidad de que la persona esté formalizada en un 16.1%. Si la vivienda es propia, mayor
+es la posibilidad de formalidad laboral. Por cada persona adicional en la vivienda, es menos
+probable que el individuo tenga empleo formal. Vivir en ciudades como Medellín y Manizales
+hace más probable que ser formal ocurra, y por cada mes que demora una persona
+en conseguir empleo desde su última experiencia laboral, se disminuye la probabilidad de que
+tenga un empleo formal en un 0.6%. Por último, por cada minuto adicional que tarde un
+trabajador en llegar hasta su puesto de trabajo, las probabilidades de que tenga un empleo
+formal incrementan en un 1.5%.</p>
+<div id="estadístico-de-wald" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Estadístico de Wald<a href="modelo-de-regresión-logística.html#estadístico-de-wald" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="modelo-de-regresión-logística.html#cb3-1" tabindex="-1"></a>lmtest<span class="sc">::</span><span class="fu">waldtest</span>(modelo)</span></code></pre></div>
+<pre><code>## Wald test
+## 
+## Model 1: formalidad ~ CLASE + Sexo + Edad + `Parentesco con jefe de hogar` + 
+##     `¿Usted se reconoce como?` + `Estado civil` + `¿Afiliado, cotizante o beneficiario de seguridad social en salud?` + 
+##     `Mayor nivel educativo alcanzado` + `Para la ocupación que desempeña, ¿tiene algún tipo de contrato` + 
+##     `¿Cuánto tiempo lleva en esta empresa trabajando de forma continua (meses)?` + 
+##     `Tipo de ocupación` + `El mes pasado, ¿recibió pagos por concepto de arriendos o pensiones?` + 
+##     `¿Es propietario de una o varias propiedades inmuebles?` + 
+##     `Tipo de vivienda` + `¿Tiene servicio de energía eléctrica?` + 
+##     `Estrato para tarifa` + `Número de hogares en la vivienda` + 
+##     `Número de cuartos` + `La vivienda ocupada por este hogar es` + 
+##     `Total de personas en el hogar` + AREA + `Meses que estuvo sin empleo entre su trabajo actual y el anterior` + 
+##     `Tiempo de desplazamiento hasta su sitio de trabajo`
+## Model 2: formalidad ~ 1
+##   Res.Df  Df      F    Pr(&gt;F)    
+## 1 353579                         
+## 2 353671 -92 944.74 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Con un p-valor menor al nivel de significancia, se rechaza la hipótesis nula, y se concluye
+que al menos uno de los coeficientes es distinto a cero. El modelo ajustado es mejor que uno
+sin variables.</p>
+</div>
+<div id="prueba-de-razón-de-verosimilitud-likelihood-ratio-test" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Prueba de razón de verosimilitud (Likelihood Ratio Test)<a href="modelo-de-regresión-logística.html#prueba-de-razón-de-verosimilitud-likelihood-ratio-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="modelo-de-regresión-logística.html#cb5-1" tabindex="-1"></a>lmtest<span class="sc">::</span><span class="fu">lrtest</span>(modelo)</span></code></pre></div>
+<pre><code>## Likelihood ratio test
+## 
+## Model 1: formalidad ~ CLASE + Sexo + Edad + `Parentesco con jefe de hogar` + 
+##     `¿Usted se reconoce como?` + `Estado civil` + `¿Afiliado, cotizante o beneficiario de seguridad social en salud?` + 
+##     `Mayor nivel educativo alcanzado` + `Para la ocupación que desempeña, ¿tiene algún tipo de contrato` + 
+##     `¿Cuánto tiempo lleva en esta empresa trabajando de forma continua (meses)?` + 
+##     `Tipo de ocupación` + `El mes pasado, ¿recibió pagos por concepto de arriendos o pensiones?` + 
+##     `¿Es propietario de una o varias propiedades inmuebles?` + 
+##     `Tipo de vivienda` + `¿Tiene servicio de energía eléctrica?` + 
+##     `Estrato para tarifa` + `Número de hogares en la vivienda` + 
+##     `Número de cuartos` + `La vivienda ocupada por este hogar es` + 
+##     `Total de personas en el hogar` + AREA + `Meses que estuvo sin empleo entre su trabajo actual y el anterior` + 
+##     `Tiempo de desplazamiento hasta su sitio de trabajo`
+## Model 2: formalidad ~ 1
+##   #Df  LogLik  Df  Chisq Pr(&gt;Chisq)    
+## 1  93 -115983                          
+## 2   1 -242624 -92 253281  &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Con un p-valor de menor al nivel de significancia, se rechaza la hipotésis nula y se concluye
+que el modelo más complejo tiene un mejor ajuste que el modelo con solo el intercepto. Por
+tanto, el modelo estimado provee información útil a la hora de explicar la variabilidad de la
+variable respuesta.</p>
+</div>
+<div id="pseudo-r²-como-mcfadden-cox-snell-nagelkerke" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Pseudo R² (como McFadden, Cox Snell, Nagelkerke)<a href="modelo-de-regresión-logística.html#pseudo-r²-como-mcfadden-cox-snell-nagelkerke" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Como se pudo observar en la salida, El modelo es bueno explicando aproximadamente el
+68% de la variabilidad de la variable formalidad.</p>
+</div>
+<div id="test-de-hosmer-y-lemeshow" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Test de Hosmer y Lemeshow}<a href="modelo-de-regresión-logística.html#test-de-hosmer-y-lemeshow" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="modelo-de-regresión-logística.html#cb7-1" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">performance_hosmer</span>(modelo)</span></code></pre></div>
+<pre><code>## # Hosmer-Lemeshow Goodness-of-Fit Test
+## 
+##   Chi-squared: 792.623
+##            df:   8    
+##       p-value:   0.000</code></pre>
+<pre><code>## Summary: model does not fit well.</code></pre>
+<p>Como resultado de la aplicación del test de Hosmer se obtiene un p-valor al nivel de significancia del 5%, por lo que se rechaza la hipótesis nula de que el modelo se ajusta bien a los datos.
+Sin embargo, dicho resultado no es suficiente para descartar el modelo; por el contrario, debe ser contrastado con el hallazgo de otras métricas.Nattino et al. (2020) han señalado anteriormente las limitaciones de esta prueba para el caso de grandes muestras.</p>
+</div>
+<div id="prueba-de-factor-de-inflación-de-varianza---vif" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Prueba de Factor de inflación de Varianza - VIF<a href="modelo-de-regresión-logística.html#prueba-de-factor-de-inflación-de-varianza---vif" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="modelo-de-regresión-logística.html#cb10-1" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb10-2"><a href="modelo-de-regresión-logística.html#cb10-2" tabindex="-1"></a><span class="fu">check_collinearity</span>(modelo)</span></code></pre></div>
+<pre><code>## # Check for Multicollinearity
+## 
+## Low Correlation
+## 
+##                                                                        Term
+##                                                                       CLASE
+##                                                                        Sexo
+##                                                                        Edad
+##                                                Parentesco con jefe de hogar
+##                                                    ¿Usted se reconoce como?
+##                                                                Estado civil
+##           ¿Afiliado, cotizante o beneficiario de seguridad social en salud?
+##                                             Mayor nivel educativo alcanzado
+##              Para la ocupación que desempeña, ¿tiene algún tipo de contrato
+##  ¿Cuánto tiempo lleva en esta empresa trabajando de forma continua (meses)?
+##                                                           Tipo de ocupación
+##        El mes pasado, ¿recibió pagos por concepto de arriendos o pensiones?
+##                      ¿Es propietario de una o varias propiedades inmuebles?
+##                                                            Tipo de vivienda
+##                                       ¿Tiene servicio de energía eléctrica?
+##                                                         Estrato para tarifa
+##                                            Número de hogares en la vivienda
+##                                                           Número de cuartos
+##                                       La vivienda ocupada por este hogar es
+##                                               Total de personas en el hogar
+##                                                                        AREA
+##           Meses que estuvo sin empleo entre su trabajo actual y el anterior
+##                          Tiempo de desplazamiento hasta su sitio de trabajo
+##   VIF   VIF 95% CI adj. VIF Tolerance Tolerance 95% CI
+##  1.29 [1.29, 1.30]     1.14      0.77     [0.77, 0.78]
+##  1.26 [1.26, 1.27]     1.12      0.79     [0.79, 0.79]
+##  2.24 [2.23, 2.25]     1.50      0.45     [0.44, 0.45]
+##  3.65 [3.63, 3.67]     1.91      0.27     [0.27, 0.28]
+##  1.41 [1.40, 1.42]     1.19      0.71     [0.71, 0.71]
+##  3.16 [3.15, 3.18]     1.78      0.32     [0.31, 0.32]
+##  1.00 [1.00, 1.01]     1.00      1.00     [0.99, 1.00]
+##  1.81 [1.80, 1.82]     1.35      0.55     [0.55, 0.55]
+##  2.88 [2.87, 2.90]     1.70      0.35     [0.34, 0.35]
+##  1.50 [1.49, 1.50]     1.22      0.67     [0.67, 0.67]
+##  3.52 [3.50, 3.54]     1.87      0.28     [0.28, 0.29]
+##  1.17 [1.17, 1.18]     1.08      0.85     [0.85, 0.85]
+##  1.51 [1.50, 1.51]     1.23      0.66     [0.66, 0.67]
+##  1.74 [1.73, 1.74]     1.32      0.58     [0.57, 0.58]
+##  1.14 [1.14, 1.14]     1.07      0.88     [0.87, 0.88]
+##  1.86 [1.86, 1.87]     1.37      0.54     [0.53, 0.54]
+##  1.02 [1.02, 1.02]     1.01      0.98     [0.98, 0.98]
+##  1.56 [1.55, 1.57]     1.25      0.64     [0.64, 0.64]
+##  1.97 [1.96, 1.98]     1.41      0.51     [0.50, 0.51]
+##  1.62 [1.61, 1.63]     1.27      0.62     [0.61, 0.62]
+##  1.96 [1.95, 1.97]     1.40      0.51     [0.51, 0.51]
+##  1.05 [1.05, 1.06]     1.03      0.95     [0.95, 0.95]
+##  1.08 [1.08, 1.09]     1.04      0.92     [0.92, 0.93]</code></pre>
+<p>Al calcular el factor de inflación de varianza (VIF), se encuentra alta correlación en las variables nivel educativo alcanzado, departamento y área. Sin embargo, el VIF mejoró para todas las variables al eliminar del modelo las variables departamento y saber leer y escribir.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="análisis-exploratorio-de-los-datos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="capacidad-predictiva-del-modelo-de-regresión-logística-ajustado.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/02-literature.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
